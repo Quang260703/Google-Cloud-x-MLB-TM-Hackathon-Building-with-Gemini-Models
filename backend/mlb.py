@@ -1,5 +1,4 @@
-import pprint
-from pprint import pprint
+
 import requests
 
 # Example: Get Dodgers roster
