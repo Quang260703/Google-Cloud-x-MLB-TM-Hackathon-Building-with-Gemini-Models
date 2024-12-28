@@ -1,4 +1,19 @@
-<h2 class="p-4 max-w-xs">GeeksforGeeks</h2> 
-<h4>PrimeNg Calendar Component</h4> 
-<p-calendar [inline]="true" [showWeek]="true"></p-calendar>
+<div class="grid grid-cols-[1fr_4fr] gap-4 h-screen">
+  <!-- Left Column (Calendar) -->
+  <div class="bg-gray-100 p-4 flex justify-center">
+    <p-datepicker class="w-[20vw] h-[30vh]"
+      [(ngModel)]="selectedDate"
+      dateFormat="dd.mm.yy"
+      [inline]="true"
+      [showWeek]="true"
+      (onSelect)="onDateSelect($event)"
+    ></p-datepicker>
+  </div>
+
+  <!-- Middle Column -->
+  <div class="bg-gray-200 p-4 flex">
+    <h2 class="text-xl font-bold mb-4">Middle Column</h2>
+    <p>Add content for the middle column here.</p>
+  </div>
+</div>
 <router-outlet></router-outlet>
