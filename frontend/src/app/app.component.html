@@ -1,7 +1,18 @@
-<div class="grid grid-cols-[1fr_4fr] gap-4 h-screen">
+<nav class="bg-blue-800 text-white p-4 flex items-center justify-between">
+  <div class="text-xl font-bold">
+    MLBScore
+  </div>
+  <ul class="flex space-x-6">
+    <li><a href="/" class="hover:text-gray-300">Home</a></li>
+    <li><a href="/scores" class="hover:text-gray-300">Scores</a></li>
+    <li><a href="/teams" class="hover:text-gray-300">Teams</a></li>
+    <li><a href="/about" class="hover:text-gray-300">About</a></li>
+  </ul>
+</nav>
+<div class="grid grid-cols-[auto_1fr] gap-4 h-screen">
   <!-- Left Column (Calendar) -->
   <div class="bg-gray-100 p-4 flex justify-center">
-    <p-datepicker class="w-[20vw] h-[30vh]"
+    <p-datepicker
       [(ngModel)]="selectedDate"
       dateFormat="dd.mm.yy"
       [inline]="true"
@@ -10,10 +21,9 @@
     ></p-datepicker>
   </div>
 
-  <!-- Middle Column -->
+  <!-- Right Column -->
   <div class="bg-gray-200 p-4 flex">
-    <h2 class="text-xl font-bold mb-4">Middle Column</h2>
-    <p>Add content for the middle column here.</p>
+    <!-- Right column content goes here -->
   </div>
 </div>
 <router-outlet></router-outlet>

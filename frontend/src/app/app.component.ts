@@ -16,8 +16,13 @@ export class AppComponent {
   constructor(private appService: AppService) {}
   // This function will be triggered when a date is selected
   onDateSelect(event: any) {
-    console.log(this.selectedDate?.getDay());
-    this.callApiWithDate(event.selectedDate);
+    const day = this.selectedDate.getDate(); // Day of the month
+    const month = this.selectedDate.getMonth(); // Month (0-based)
+    const year = this.selectedDate.getFullYear(); // Year
+  // Create a new Date object
+    var newDate = new Date(year, month + 1, day);
+    console.log(newDate)
+    this.callApiWithDate(newDate);
   }
 
   // Call the API with the selected date
