@@ -3,16 +3,18 @@ import { FormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
 import { DatePickerModule } from 'primeng/datepicker';
 import { AppService } from './app.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, DatePickerModule, FormsModule], // Import necessary modules
+  imports: [RouterOutlet, DatePickerModule, FormsModule, CommonModule], // Import necessary modules
   templateUrl: './app.component.html', // The template for the component
 })
 export class AppComponent {
   title = 'frontend';
-  selectedDate: Date = new Date(Date.now());
+  teamNames: { awayTeam: string, homeTeam: string }[] = [];
+  selectedDate: Date = new Date(2024, 2, 18);
   constructor(private appService: AppService) {}
   // This function will be triggered when a date is selected
   onDateSelect(event: any) {
@@ -20,7 +22,7 @@ export class AppComponent {
     const month = this.selectedDate.getMonth(); // Month (0-based)
     const year = this.selectedDate.getFullYear(); // Year
   // Create a new Date object
-    var newDate = new Date(year, month + 1, day);
+    var newDate = new Date(year, month, day);
     console.log(newDate)
     this.callApiWithDate(newDate);
   }
@@ -31,7 +33,14 @@ export class AppComponent {
     if (date != null) {
       this.appService.getDataByDate(date).subscribe(
         (response) => {
-          console.log('API Response:', response); // Handle the response
+          var games = response.dates[0].games;
+          this.teamNames = games.map((play: any) => {
+            return {
+              awayTeam: play.teams.away.team.name,
+              homeTeam: play.teams.home.team.name
+            };
+          });
+          console.log('API Response:', this.teamNames); // Handle the response
         },
         (error) => {
           console.error('API Error:', error); // Handle error if the request fails

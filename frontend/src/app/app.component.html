@@ -11,12 +11,11 @@
 </nav>
 <div class="grid grid-cols-[auto_1fr] gap-4 h-screen">
   <!-- Left Column (Calendar) -->
-  <div class="bg-gray-100 p-4 flex justify-center">
+  <div class="bg-gray-200 p-4 flex justify-center">
     <p-datepicker
       [(ngModel)]="selectedDate"
       dateFormat="dd.mm.yy"
       [inline]="true"
-      [showWeek]="true"
       (onSelect)="onDateSelect($event)"
     ></p-datepicker>
   </div>
@@ -24,6 +23,13 @@
   <!-- Right Column -->
   <div class="bg-gray-200 p-4 flex">
     <!-- Right column content goes here -->
+    <div *ngIf="teamNames.length === 0">Loading...</div>
+
+    <div *ngIf="teamNames.length > 0">
+      <div *ngFor="let team of teamNames">
+        <div>{{ team.awayTeam }} vs {{ team.homeTeam }}</div>
+      </div>
+    </div>
   </div>
 </div>
 <router-outlet></router-outlet>
