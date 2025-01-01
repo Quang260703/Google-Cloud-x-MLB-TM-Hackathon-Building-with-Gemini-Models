@@ -21,5 +21,5 @@ export class AppService {
 
     // Make the HTTP GET request
     return this.http.get<any>(dynamicUrl);
-}
+  }
 }
