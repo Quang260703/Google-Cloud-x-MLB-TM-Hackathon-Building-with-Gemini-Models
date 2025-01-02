@@ -66,4 +66,9 @@ export class AppComponent implements OnInit, OnDestroy {
       }
     }
   }
+
+  getLogoUrl(teamName: string): string {
+    const formattedName = teamName.replace(/\s+/g, '-').toLowerCase(); // Replace spaces and convert to lowercase
+    return `assets/MLB_AL/new_york_yankees_logo_primary_19685115.png`; // Adjust path if necessary
+  }
 }

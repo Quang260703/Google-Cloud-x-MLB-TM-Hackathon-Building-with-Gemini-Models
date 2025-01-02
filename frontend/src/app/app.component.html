@@ -23,16 +23,42 @@
   <!-- Right Column -->
   <div class="bg-gray-200 p-4 flex">
     <!-- Right column content goes here -->
-    <div *ngIf="teamNames.length === 0" class="w-full text-xl font-semibold text-center text-gray-800">There is no game on this date.</div>
+    <div *ngIf="teamNames.length === 0" class="w-full text-xl font-semibold text-center text-gray-800">
+      There is no game on this date.</div>
 
     <!-- Display games -->
     <div *ngIf="teamNames.length > 0" class="w-full">
-      <div *ngFor="let team of teamNames" class="bg-white p-4 rounded-lg shadow-md hover:shadow-xl transition-shadow mb-4 mx-auto">
-        <div class="text-xl font-semibold text-center text-gray-800">
-          {{ team.awayTeam }} vs {{ team.homeTeam }}
+      <div
+        *ngFor="let team of teamNames"
+        class="bg-white p-4 rounded-lg shadow-md hover:shadow-xl transition-shadow mb-4 mx-auto flex items-center justify-between"
+      >
+        <!-- Away Team -->
+        <div class="flex items-center space-x-2">
+          <img
+            [src]="getLogoUrl(team.awayTeam)"
+            alt="{{ team.awayTeam }} Logo"
+            class="h-10 w-10"
+          />
+          <span class="text-lg font-semibold text-gray-800">
+            {{ team.awayTeam }}
+          </span>
         </div>
-        <div class="text-sm text-gray-600 text-center mt-2">
-          <!-- You can add additional info about the game here if needed -->
+    
+        <!-- Separator -->
+        <div class="flex items-center justify-center text-gray-600 text-sm font-semibold h-full">
+          vs
+        </div>
+    
+        <!-- Home Team -->
+        <div class="flex items-center space-x-2">
+          <span class="text-lg font-semibold text-gray-800">
+            {{ team.homeTeam }}
+          </span>
+          <img
+            [src]="getLogoUrl(team.homeTeam)"
+            alt="{{ team.homeTeam }} Logo"
+            class="h-10 w-10"
+          />
         </div>
       </div>
     </div>
