@@ -7,11 +7,13 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Subscription, firstValueFrom, interval } from 'rxjs';
 import { Team } from './shared/interface';
 import { MLB_TEAMS } from './shared/constants';
+import { Router } from '@angular/router';
+import { MatchComponent } from './match/match.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, DatePickerModule, FormsModule, CommonModule], // Import necessary modules
+  imports: [RouterOutlet, DatePickerModule, FormsModule, CommonModule, MatchComponent], // Import necessary modules
   templateUrl: './app.component.html', // The template for the component
 })
 export class AppComponent implements OnInit, OnDestroy {
@@ -21,7 +23,7 @@ export class AppComponent implements OnInit, OnDestroy {
   interval: Subscription | undefined;
   isBrowser = signal(false);
 
-  constructor(private appService: AppService, @Inject(PLATFORM_ID) platformId: object) {
+  constructor(private appService: AppService, private router: Router, @Inject(PLATFORM_ID) platformId: object) {
     this.isBrowser.set(isPlatformBrowser(platformId));
   }
 
@@ -95,5 +97,9 @@ export class AppComponent implements OnInit, OnDestroy {
       return `assets/Logo/${teamName}.png`;
     }
     return `assets/Logo/mlb.png`;
+  }
+
+  goToMatch(matchId: string): void {
+    this.router.navigate(['/match', matchId]);
   }
 }
