@@ -32,7 +32,6 @@
                 alt="{{ team.homeTeam.team.name }} Logo"
                 class="h-10 w-10"
                 loading="lazy"
-                (error)="onImageError($event)"
               />
               <span class="text-lg font-semibold text-gray-800">
                 {{ team.homeTeam.team.name }}
@@ -40,12 +39,15 @@
             </div>
             <div class="flex items-center space-x-2">
               <!-- Display score for Home Team if 'Final', else show a placeholder -->
-              <ng-container *ngIf="team.detailedState === 'Final'; else notHomeFinal">
+              <ng-container *ngIf="team.codedGameState === 'F'; else notHomeFinal">
                 <span class="text-lg font-semibold text-gray-800">
                   {{ team.homeTeam.score }}
                 </span>
               </ng-container>
               <ng-template #notHomeFinal>
+                <ng-container *ngIf="team.codedGameState === 'I'">
+                  <div class="w-3 h-3 rounded-full bg-red-500 animate-pulse"></div>
+                </ng-container>
                 <span class="text-lg font-semibold text-gray-500">
                   {{ team.detailedState }}
                 </span>
@@ -61,7 +63,6 @@
                 alt="{{ team.awayTeam.team.name }} Logo"
                 class="h-10 w-10"
                 loading="lazy"
-                (error)="onImageError($event)"
               />
               <span class="text-lg font-semibold text-gray-800">
                 {{ team.awayTeam.team.name }}
@@ -69,7 +70,7 @@
             </div>
             <div class="flex items-center space-x-2">
               <!-- Display score for Away Team if 'Final', else show a placeholder -->
-              <ng-container *ngIf="team.detailedState === 'Final'; else notAwayFinal">
+              <ng-container *ngIf="team.codedGameState === 'F'; else notAwayFinal">
                 <span class="text-lg font-semibold text-gray-800">
                   {{ team.awayTeam.score }}
                 </span>

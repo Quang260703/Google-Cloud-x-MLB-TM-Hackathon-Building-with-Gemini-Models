@@ -4,8 +4,9 @@ import { RouterOutlet } from '@angular/router';
 import { DatePickerModule } from 'primeng/datepicker';
 import { AppService } from './app.service';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { Subscription, firstValueFrom } from 'rxjs';
-import { Team } from './interface';
+import { Subscription, firstValueFrom, interval } from 'rxjs';
+import { Team } from './shared/interface';
+import { MLB_TEAMS } from './shared/constants';
 
 @Component({
   selector: 'app-root',
@@ -15,21 +16,22 @@ import { Team } from './interface';
 })
 export class AppComponent implements OnInit, OnDestroy {
   title = 'frontend';
-  teamNames: { awayTeam: Team, homeTeam: Team, detailedState: string, time: string }[] = [];
+  teamNames: { awayTeam: Team, homeTeam: Team, detailedState: string, time: string, codedGameState: string }[] = [];
   selectedDate: Date = new Date(2024, 2, 18);
   interval: Subscription | undefined;
   isBrowser = signal(false);
 
   constructor(private appService: AppService, @Inject(PLATFORM_ID) platformId: object) {
-    this.callApiWithDate(this.selectedDate);
     this.isBrowser.set(isPlatformBrowser(platformId));
   }
 
   ngOnInit() {
+    this.callApiWithDate(this.selectedDate);
+    
     if(this.isBrowser()) { // check it where you want to write setTimeout or setInterval
-      setInterval(()=> {
-        this.callApiWithDate(this.selectedDate)
-      }, 10000)
+      this.interval = interval(10000).subscribe(() => {
+        this.callApiWithDate(this.selectedDate);
+      });
     }
   }
 
@@ -62,7 +64,8 @@ export class AppComponent implements OnInit, OnDestroy {
               awayTeam: play.teams.away,
               homeTeam: play.teams.home,
               detailedState: play.status.detailedState,
-              time: this.getLocalTime(new Date(play.gameDate))
+              time: this.getLocalTime(new Date(play.gameDate)),
+              codedGameState: play.status.codedGameState
             };
           });
         }
@@ -88,11 +91,9 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   getLogoUrl(teamName: string): string {
-    return `assets/Logo/${teamName}.png`; // Adjust path if necessary
-  }
-
-  onImageError(event: any): void {
-    // Replace the image with the default logo when the image fails to load
-    event.target.src = `assets/Logo/mlb.png`;
+    if (MLB_TEAMS.includes(teamName)) {
+      return `assets/Logo/${teamName}.png`;
+    }
+    return `assets/Logo/mlb.png`;
   }
 }
