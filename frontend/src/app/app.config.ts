@@ -3,6 +3,8 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeng/themes/aura';
 import { provideHttpClient, withFetch } from '@angular/common/http';
+import { routes } from './app-routing.module';
+import { provideRouter } from '@angular/router';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -12,6 +14,7 @@ export const appConfig: ApplicationConfig = {
               preset: Aura
           }
       }),
-      provideHttpClient(withFetch())
+      provideHttpClient(withFetch()),
+      provideRouter(routes)
   ]
 };

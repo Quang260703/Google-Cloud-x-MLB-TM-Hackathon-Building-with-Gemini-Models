@@ -1,23 +1,19 @@
 import { Component, OnInit, OnDestroy, Inject, PLATFORM_ID, signal } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { RouterOutlet } from '@angular/router';
-import { DatePickerModule } from 'primeng/datepicker';
-import { AppService } from './app.service';
+import { AppService } from './schedule.service';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Subscription, firstValueFrom, interval } from 'rxjs';
 import { Team } from '../shared/interface';
 import { MLB_TEAMS } from '../shared/constants';
-import { Router } from '@angular/router';
-import { MatchComponent } from '../match/match.component';
+import { Router, RouterOutlet } from '@angular/router';
+import { DatePickerModule } from 'primeng/datepicker';
+import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [RouterOutlet, DatePickerModule, FormsModule, CommonModule, MatchComponent], // Import necessary modules
-  templateUrl: './app.component.html', // The template for the component
+  selector: 'app-schedule',
+  imports: [CommonModule, DatePickerModule, FormsModule, RouterOutlet],
+  templateUrl: './schedule.component.html', // The template for the component
 })
-export class AppComponent implements OnInit, OnDestroy {
-  title = 'frontend';
+export class ScheduleComponent implements OnInit, OnDestroy {
   teamNames: { awayTeam: Team, homeTeam: Team, detailedState: string, time: string, codedGameState: string }[] = [];
   selectedDate: Date = new Date(2024, 2, 18);
   interval: Subscription | undefined;
