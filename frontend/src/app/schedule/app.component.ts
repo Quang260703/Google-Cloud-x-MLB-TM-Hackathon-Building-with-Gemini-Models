@@ -5,10 +5,10 @@ import { DatePickerModule } from 'primeng/datepicker';
 import { AppService } from './app.service';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Subscription, firstValueFrom, interval } from 'rxjs';
-import { Team } from './shared/interface';
-import { MLB_TEAMS } from './shared/constants';
+import { Team } from '../shared/interface';
+import { MLB_TEAMS } from '../shared/constants';
 import { Router } from '@angular/router';
-import { MatchComponent } from './match/match.component';
+import { MatchComponent } from '../match/match.component';
 
 @Component({
   selector: 'app-root',
