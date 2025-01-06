@@ -18,7 +18,7 @@
     <!-- Display games -->
     <div *ngIf="teamNames.length > 0" class="w-full">
       <ng-container *ngFor="let team of teamNames">
-        <div class="bg-white p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow mb-4 mx-auto flex flex-col justify-center" (click)="goToMatch('12345')">
+        <div class="bg-white p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow mb-4 mx-auto flex flex-col justify-center" (click)="goToMatch(team.gameId)">
           <!-- Home Team -->
           <div class="flex justify-between items-center space-x-2 mb-2">
             <div class="flex items-center space-x-2">

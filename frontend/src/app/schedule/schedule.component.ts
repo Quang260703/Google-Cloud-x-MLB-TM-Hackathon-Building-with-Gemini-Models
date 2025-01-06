@@ -14,7 +14,7 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './schedule.component.html', // The template for the component
 })
 export class ScheduleComponent implements OnInit, OnDestroy {
-  teamNames: { awayTeam: Team, homeTeam: Team, detailedState: string, time: string, codedGameState: string }[] = [];
+  teamNames: { awayTeam: Team, homeTeam: Team, detailedState: string, time: string, codedGameState: string, gameId: string }[] = [];
   selectedDate: Date = new Date(2024, 2, 18);
   interval: Subscription | undefined;
   isBrowser = signal(false);
@@ -63,7 +63,8 @@ export class ScheduleComponent implements OnInit, OnDestroy {
               homeTeam: play.teams.home,
               detailedState: play.status.detailedState,
               time: this.getLocalTime(new Date(play.gameDate)),
-              codedGameState: play.status.codedGameState
+              codedGameState: play.status.codedGameState,
+              gameId: play.gamePk
             };
           });
         }
