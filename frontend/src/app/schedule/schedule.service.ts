@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class AppService {
   private baseUrl = 'https://statsapi.mlb.com/api/v1/schedule?sportId=1'; // Base URL
+  private matchUrl = 'https://statsapi.mlb.com/api/v1.1/game/{}/feed/live'
 
   constructor(private http: HttpClient) {}
 
@@ -21,5 +22,10 @@ export class AppService {
 
     // Make the HTTP GET request
     return this.http.get<any>(dynamicUrl);
+  }
+
+  getDataByMatchId(matchId: string): Observable<any> {
+    const url = this.matchUrl.replace('{}', matchId); // Replace placeholder with matchId
+    return this.http.get<any>(url); // Make an HTTP GET request
   }
 }

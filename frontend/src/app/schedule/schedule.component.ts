@@ -56,22 +56,18 @@ export class ScheduleComponent implements OnInit, OnDestroy {
       try {
         const response = await firstValueFrom(this.appService.getDataByDate(date));
         const games = response.dates[0]?.games || [];
-        if (games.length > 0) {
-          this.teamNames = games.map((play: any) => {
-            return {
-              awayTeam: play.teams.away,
-              homeTeam: play.teams.home,
-              detailedState: play.status.detailedState,
-              time: this.getLocalTime(new Date(play.gameDate)),
-              codedGameState: play.status.codedGameState,
-              gameId: play.gamePk
-            };
-          });
-        }
-        else {
-          this.teamNames = [];
-        }
-      } catch (error) {
+        this.teamNames = games.map((play: any) => {
+          return {
+            awayTeam: play.teams.away,
+            homeTeam: play.teams.home,
+            detailedState: play.status.detailedState,
+            time: this.getLocalTime(new Date(play.gameDate)),
+            codedGameState: play.status.codedGameState,
+            gameId: play.gamePk
+          };
+        });
+      }
+      catch (error) {
         console.log(error);
       }
     }
