@@ -4,3 +4,12 @@ export interface Team {
     },
     score?: string
 }
+
+export interface Inning {
+    home: {
+        runs?: string
+    }
+    away: {
+        runs?: string
+    }
+}

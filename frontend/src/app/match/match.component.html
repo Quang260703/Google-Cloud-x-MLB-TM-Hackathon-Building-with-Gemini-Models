@@ -1,24 +1,37 @@
 <div class="grid grid-cols-1 md:grid-cols-[2fr_3fr] gap-4 h-screen">
-  <div class="bg-gray-100 p-4 text-gray-500 flex items-start justify-between">
-    <!-- Team 1 Logo -->
-    <div class="flex flex-col items-center space-y-2">
-      <img src="assets/Logo/mlb.png" alt="Team 1 Logo" class="h-12 w-12">
-      <span class="text-lg font-semibold">Team 1</span>
-    </div>
-    
-    <!-- Score -->
-    <div class="flex items-center justify-center h-12 text-2xl font-bold text-gray-700">
-      2 - 3
-    </div>
-    
-    <div class="flex flex-col items-center space-y-2">
-      <img src="assets/Logo/mlb.png" alt="Team 2 Logo" class="h-12 w-12">
-      <span class="text-lg font-semibold">Team 2</span>
-    </div>
+  <div *ngIf="!isLoading; else loading">
+    Loading
   </div>
-  <div class="bg-gray-200 p-4">
-    <ng-container *ngFor="let data of matchData">
-      <h1>{{ data }}</h1>
-    </ng-container>
-  </div>
+  <ng-template #loading>
+    <div class="bg-gray-100 p-4 text-gray-500 flex items-start justify-between">
+      <!-- Team 1 Logo -->
+      <div class="flex flex-col items-center space-y-2">
+        <img 
+          [src]="getLogoUrl(matchData.home)"
+          alt="{{ matchData.home }} Logo" 
+          class="h-10 w-10"
+          loading="lazy">
+        <span class="text-lg font-semibold">{{ matchData.home }}</span>
+      </div>
+      
+      <!-- Score -->
+      <div class="flex items-center justify-center h-10 text-2xl font-bold text-gray-700">
+        {{ matchData.finalScore.home.runs }} - {{ matchData.finalScore.away.runs }}
+      </div>
+      
+      <div class="flex flex-col items-center space-y-2">
+        <img 
+          [src]="getLogoUrl(matchData!.away)"
+          alt="{{ matchData!.away }} Logo" 
+          class="h-10 w-10"
+          loading="lazy">
+        <span class="text-lg font-semibold">{{ matchData.away }}</span>
+      </div>
+    </div>
+    <div class="bg-gray-200 p-4">
+      <ng-container *ngFor="let data of matchData.description">
+        <h1>{{ data }}</h1>
+      </ng-container>
+    </div>
+  </ng-template>
 </div>
