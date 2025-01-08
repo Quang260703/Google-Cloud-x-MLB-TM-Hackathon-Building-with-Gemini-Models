@@ -1,4 +1,4 @@
-<div class="grid grid-cols-1 md:grid-cols-[2fr_3fr] gap-4 h-screen">
+<div class="grid grid-cols-1 md:grid-cols-[2fr_3fr] gap-4 h-screen auto-rows-min">
   <div *ngIf="!isLoading; else loading">
     Loading
   </div>
@@ -50,10 +50,27 @@
     </div>
 
     <!-- Description -->
-    <div class="bg-gray-200 p-4">
-      <ng-container *ngFor="let data of matchData.description">
-        <h1>{{ data }}</h1>
-      </ng-container>
+    <div class="bg-gray-200 p-4 text-black">
+      <!-- Tab Bar -->
+      <div class="flex border-b">
+        <button (click)="activeTab = 1" class="py-2 px-4" [class.border-b-2]="activeTab === 1" [class.border-blue-500]="activeTab === 1">
+          Tab 1
+        </button>
+        <button (click)="activeTab = 2" class="py-2 px-4" [class.border-b-2]="activeTab === 2" [class.border-blue-500]="activeTab === 2">
+          Tab 2
+        </button>
+      </div>
+    
+      <!-- Tab Content -->
+      <div *ngIf="activeTab === 1" class="mt-4">
+        <ng-container *ngFor="let data of matchData.description">
+          <h1>{{ data }}</h1>
+        </ng-container>
+      </div>
+      
+      <div *ngIf="activeTab === 2" class="mt-4">
+        <p>Content for Tab 2 goes here...</p>
+      </div>
     </div>
   </ng-template>
 </div>

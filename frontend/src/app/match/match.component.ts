@@ -12,6 +12,7 @@ import { MLB_TEAMS } from '../shared/constants';
   templateUrl: './match.component.html'
 })
 export class MatchComponent implements OnInit {
+  activeTab: number = 1;
   isLoading = signal(true);
   matchData: { description: string[], finalScore: Inning, scoreByInning: Inning[], home: string, away: string } = {
     description: [],
