@@ -3,9 +3,8 @@
     Loading
   </div>
   <ng-template #loading>
-    <div class="bg-gray-100 p-4 text-gray-500 flex items-start justify-between">
-      <!-- First Column (Home vs Away) -->
-      <div class="flex flex-col items-center space-y-2 w-full">
+    <div class="bg-gray-200 p-4 flex flex-col">
+      <div class="bg-gray-100 p-4 text-gray-500 flex items-start justify-between">
         <!-- Home Team Logo and Name -->
         <div class="flex flex-col items-center space-y-2">
           <img 
@@ -30,15 +29,21 @@
             loading="lazy">
           <span class="text-lg font-semibold">{{ matchData.away }}</span>
         </div>
-        
-        <!-- Inning-by-Inning Score (Home vs Away) -->
-        <div class="mt-4">
-          <h3 class="text-xl font-semibold text-gray-700">Inning-by-Inning Score</h3>
-          <div *ngFor="let inning of matchData.scoreByInning; let i = index" class="flex justify-between mt-1">
-            <span>Inning {{ i + 1 }}:</span>
-            <span>{{ inning.home?.runs !== undefined && inning.home?.runs !== null ? inning.home.runs : 'X' }} 
-              - 
-              {{ inning.away?.runs !== undefined && inning.away?.runs !== null ? inning.away.runs : 'X' }}</span>
+      </div>
+
+      <!-- Inning-by-Inning Score (Home vs Away) -->
+      <div class="bg-gray-100 p-4 text-gray-500">
+        <div class="grid grid-flow-col gap-4">
+          <div class="grid grid-rows-3 gap-2">
+            <div>Team</div> <!-- Label for Inning -->
+            <div>{{ matchData.home }}</div>   <!-- Label for Home Score -->
+            <div>{{ matchData.away }}</div>   <!-- Label for Away Score -->
+          </div>
+
+          <div *ngFor="let inning of matchData.scoreByInning; let i = index" class="grid grid-rows-3 gap-2 text-center">
+            <div>{{ i + 1 }}</div>
+            <div>{{ inning.home.runs !== undefined && inning.home.runs !== null ? inning.home.runs : 'X' }}</div>
+            <div>{{ inning.away.runs !== undefined && inning.away.runs !== null ? inning.away.runs : 'X' }}</div>
           </div>
         </div>
       </div>
