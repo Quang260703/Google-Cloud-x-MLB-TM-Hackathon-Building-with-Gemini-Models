@@ -13,3 +13,15 @@ export interface Inning {
         runs?: string
     }
 }
+
+export interface Play {
+    result: {
+        description?: string
+    }
+    about: {
+        halfInning: string,
+        inning: number,
+        startTime: string,
+        endTime: string
+    }
+}

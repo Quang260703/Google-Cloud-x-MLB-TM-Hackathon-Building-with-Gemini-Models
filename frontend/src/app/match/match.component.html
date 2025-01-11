@@ -64,7 +64,8 @@
       <!-- Tab Content -->
       <div *ngIf="activeTab === 1" class="mt-4">
         <ng-container *ngFor="let data of matchData.description">
-          <h1>{{ data }}</h1>
+          <p>{{ getLocalTime(data.about.startTime) }} - {{ getLocalTime(data.about.endTime) }}</p>
+          <h1>{{ data.result.description }}</h1>
         </ng-container>
       </div>
       
