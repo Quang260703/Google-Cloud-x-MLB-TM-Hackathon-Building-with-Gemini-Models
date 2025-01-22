@@ -19,7 +19,7 @@ export interface Play {
         description?: string
     }
     about: {
-        halfInning: string,
+        isTopInning: boolean,
         inning: number,
         startTime: string,
         endTime: string

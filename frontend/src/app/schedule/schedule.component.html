@@ -19,39 +19,9 @@
     <div *ngIf="teamNames.length > 0" class="w-full">
       <ng-container *ngFor="let team of teamNames">
         <div class="bg-white p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow mb-4 mx-auto flex flex-col justify-center" (click)="goToMatch(team.gameId)">
-          <!-- Home Team -->
+          
+          <!-- Away Team (Now on Top) -->
           <div class="flex justify-between items-center space-x-2 mb-2">
-            <div class="flex items-center space-x-2">
-              <img
-                [src]="getLogoUrl(team.homeTeam.team.name)"
-                alt="{{ team.homeTeam.team.name }} Logo"
-                class="h-10 w-10"
-                loading="lazy"
-              />
-              <span class="text-lg font-semibold text-gray-800">
-                {{ team.homeTeam.team.name }}
-              </span>
-            </div>
-            <div class="flex items-center space-x-2">
-              <!-- Display score for Home Team if 'Final', else show a placeholder -->
-              <ng-container *ngIf="team.codedGameState === 'F'; else notHomeFinal">
-                <span class="text-lg font-semibold text-gray-800">
-                  {{ team.homeTeam.score }}
-                </span>
-              </ng-container>
-              <ng-template #notHomeFinal>
-                <ng-container *ngIf="team.codedGameState === 'I'">
-                  <div class="w-3 h-3 rounded-full bg-red-500 animate-pulse"></div>
-                </ng-container>
-                <span class="text-lg font-semibold text-gray-500">
-                  {{ team.detailedState }}
-                </span>
-              </ng-template>
-            </div>
-          </div>
-      
-          <!-- Away Team -->
-          <div class="flex justify-between items-center space-x-2">
             <div class="flex items-center space-x-2">
               <img
                 [src]="getLogoUrl(team.awayTeam.team.name)"
@@ -71,12 +41,44 @@
                 </span>
               </ng-container>
               <ng-template #notAwayFinal>
+                <ng-container *ngIf="team.codedGameState === 'I'">
+                  <div class="w-3 h-3 rounded-full bg-red-500 animate-pulse"></div>
+                </ng-container>
+                <span class="text-lg font-semibold text-gray-500">
+                  {{ team.detailedState }}
+                </span>
+              </ng-template>
+            </div>
+          </div>
+      
+          <!-- Home Team (Now on Bottom) -->
+          <div class="flex justify-between items-center space-x-2">
+            <div class="flex items-center space-x-2">
+              <img
+                [src]="getLogoUrl(team.homeTeam.team.name)"
+                alt="{{ team.homeTeam.team.name }} Logo"
+                class="h-10 w-10"
+                loading="lazy"
+              />
+              <span class="text-lg font-semibold text-gray-800">
+                {{ team.homeTeam.team.name }}
+              </span>
+            </div>
+            <div class="flex items-center space-x-2">
+              <!-- Display score for Home Team if 'Final', else show a placeholder -->
+              <ng-container *ngIf="team.codedGameState === 'F'; else notHomeFinal">
+                <span class="text-lg font-semibold text-gray-800">
+                  {{ team.homeTeam.score }}
+                </span>
+              </ng-container>
+              <ng-template #notHomeFinal>
                 <span class="text-lg font-semibold text-gray-500">
                   {{ team.time }}
                 </span>
               </ng-template>
             </div>
           </div>
+      
         </div>
       </ng-container>
     </div>

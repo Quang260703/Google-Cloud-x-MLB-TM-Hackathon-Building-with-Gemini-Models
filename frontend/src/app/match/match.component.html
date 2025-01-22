@@ -5,6 +5,21 @@
   <ng-template #loading>
     <div class="bg-gray-200 p-4 flex flex-col">
       <div class="bg-gray-100 p-4 text-gray-500 flex items-start justify-between">
+        <!-- Away Team Logo and Name -->
+        <div class="flex flex-col items-center space-y-2">
+          <img 
+            [src]="getLogoUrl(matchData.away)"
+            alt="{{ matchData.away }} Logo" 
+            class="h-10 w-10"
+            loading="lazy">
+          <span class="text-lg font-semibold">{{ matchData.away }}</span>
+        </div>
+        
+        <!-- Score (Away vs Home) -->
+        <div class="flex items-center justify-center h-10 text-2xl font-bold text-gray-700">
+          {{ matchData.finalScore.away.runs }} - {{ matchData.finalScore.home.runs }}
+        </div>
+        
         <!-- Home Team Logo and Name -->
         <div class="flex flex-col items-center space-y-2">
           <img 
@@ -14,36 +29,21 @@
             loading="lazy">
           <span class="text-lg font-semibold">{{ matchData.home }}</span>
         </div>
-        
-        <!-- Score (Home vs Away) -->
-        <div class="flex items-center justify-center h-10 text-2xl font-bold text-gray-700">
-          {{ matchData.finalScore.home.runs }} - {{ matchData.finalScore.away.runs }}
-        </div>
-        
-        <!-- Away Team Logo and Name -->
-        <div class="flex flex-col items-center space-y-2">
-          <img 
-            [src]="getLogoUrl(matchData!.away)"
-            alt="{{ matchData!.away }} Logo" 
-            class="h-10 w-10"
-            loading="lazy">
-          <span class="text-lg font-semibold">{{ matchData.away }}</span>
-        </div>
       </div>
 
-      <!-- Inning-by-Inning Score (Home vs Away) -->
+      <!-- Inning-by-Inning Score (Away vs Home) -->
       <div class="bg-gray-100 p-4 text-gray-500">
         <div class="grid grid-flow-col gap-4">
           <div class="grid grid-rows-3 gap-2">
             <div>Team</div> <!-- Label for Inning -->
-            <div>{{ matchData.home }}</div>   <!-- Label for Home Score -->
             <div>{{ matchData.away }}</div>   <!-- Label for Away Score -->
+            <div>{{ matchData.home }}</div>   <!-- Label for Home Score -->
           </div>
 
           <div *ngFor="let inning of matchData.scoreByInning; let i = index" class="grid grid-rows-3 gap-2 text-center">
             <div>{{ i + 1 }}</div>
-            <div>{{ inning.home.runs !== undefined && inning.home.runs !== null ? inning.home.runs : 'X' }}</div>
             <div>{{ inning.away.runs !== undefined && inning.away.runs !== null ? inning.away.runs : 'X' }}</div>
+            <div>{{ inning.home.runs !== undefined && inning.home.runs !== null ? inning.home.runs : 'X' }}</div>
           </div>
         </div>
       </div>
@@ -62,10 +62,17 @@
       </div>
     
       <!-- Tab Content -->
-      <div *ngIf="activeTab === 1" class="mt-4">
+      <div *ngIf="activeTab === 1" class="mt-4 space-y-4">
         <ng-container *ngFor="let data of matchData.description">
-          <p>{{ getLocalTime(data.about.startTime) }} - {{ getLocalTime(data.about.endTime) }}</p>
-          <h1>{{ data.result.description }}</h1>
+          <div 
+            class="bg-gray-100 p-4 rounded-lg shadow w-fit"
+            [ngClass]="{ 'ml-0 mr-auto text-left': data.about.isTopInning, 'ml-auto mr-0 text-right': !data.about.isTopInning }"
+          >
+            <p class="text-gray-600">
+              {{ getLocalTime(data.about.startTime) }} - {{ getLocalTime(data.about.endTime) }}
+            </p>
+            <p class="text-lg font-semibold text-gray-800">{{ data.result.description }}</p>
+          </div>
         </ng-container>
       </div>
       
